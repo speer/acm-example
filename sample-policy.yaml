@@ -1,0 +1,91 @@
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  annotations:
+    policy.open-cluster-management.io/categories: PR.IP Information Protection Processes and Procedures
+    policy.open-cluster-management.io/controls: PR.IP-1 Baseline Configuration
+    policy.open-cluster-management.io/standards: NIST-CSF
+  name: appuio-acm-sample-policy
+  namespace: appuio-acm-sample-policy
+spec:
+  disabled: false
+  remediationAction: enforce
+  policy-templates:
+  - objectDefinition:
+      apiVersion: policy.open-cluster-management.io/v1
+      kind: ConfigurationPolicy
+      metadata:
+        name: appuio-acm-sample-policy-limitrange
+      spec:
+        namespaceSelector:
+          exclude:
+          - kube-*
+          include:
+          - appuio-*
+        object-templates:
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: v1
+            kind: LimitRange
+            metadata:
+              name: appuio-acm-sample-limitrange
+            spec:
+              limits:
+              - default:
+                  memory: 256Mi
+                defaultRequest:
+                  memory: 128Mi
+                type: Container
+        remediationAction: inform
+        severity: medium
+  - objectDefinition:
+      apiVersion: policy.open-cluster-management.io/v1
+      kind: ConfigurationPolicy
+      metadata:
+        name: appuio-acm-sample-policy-namespace
+      spec:
+        namespaceSelector:
+          exclude:
+          - kube-*
+          include:
+          - default
+        object-templates:
+        - complianceType: musthave
+          objectDefinition:
+            apiVersion: v1
+            kind: Namespace
+            metadata:
+              name: appuio-acm-policy-namespace
+        remediationAction: inform
+        severity: low
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: binding-appuio-acm-sample-policy
+  namespace: appuio-acm-sample-policy
+placementRef:
+  name: placement-appuio-acm-sample-policy
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+- name: appuio-acm-sample-policy
+  kind: Policy
+  apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: placement-appuio-acm-sample-policy
+  namespace: appuio-acm-sample-policy
+spec:
+  clusterConditions:
+  - status: "True"
+    type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+    - key: name
+      operator: In
+      values:
+      - "ocp3-cloudscale-staging"

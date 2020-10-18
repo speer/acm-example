@@ -11,7 +11,7 @@ metadata:
   namespace: appuio-acm-sample-app
 spec:
   type: GitHub
-  pathname: https://github.com/bliemli/appuio-acm-example.git
+  pathname: https://github.com/appuio/acm-example.git
 ---
 apiVersion: apps.open-cluster-management.io/v1
 kind: Subscription

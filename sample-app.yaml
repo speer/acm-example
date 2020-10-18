@@ -27,7 +27,7 @@ spec:
   name: appuio-acm-sample-app
   placement:
     clusters:
-    - name: ocp4-aws-techlab
+    - name: ocp3-cloudscale-staging
 ---
 apiVersion: app.k8s.io/v1beta1
 kind: Application

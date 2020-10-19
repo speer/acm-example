@@ -20,6 +20,7 @@ metadata:
   namespace: appuio-acm-sample-app
   annotations:
     apps.open-cluster-management.io/git-path: sample-app
+    apps.open-cluster-management.io/git-branch: main
   labels:
     app: appuio-acm-sample-app
 spec:

@@ -12,9 +12,9 @@ Optional: You can use the provided [multiclusterhub_multiclusterhub.yaml](multic
 
 ## Usage
 
-Adapt the cluster placement in [sample.app on line 30](sample-app.yaml#L30) and in [sample-policy.yaml on line 96](sample-policy.yaml#L96) to your setup.
+Adapt the cluster placement in [sample-app.yaml on line 30](sample-app.yaml#L30) and in [sample-policy.yaml on line 96](sample-policy.yaml#L96) to your setup.
 
-Logged in on the hub cluster, apply the [sample.app](sample-app.yaml) or [sample-policy.yaml](sample-policy.yaml):
+Logged in on the hub cluster, apply the [sample-app.yaml](sample-app.yaml) and [sample-policy.yaml](sample-policy.yaml):
 
 ```
 oc apply -f sample-app.yaml
